@@ -10,6 +10,7 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+
 const express = require("express");
 const mongoose = require("mongoose");
 const passport = require("passport");
@@ -17,13 +18,19 @@ const flash = require("express-flash");
 const session = require("express-session");
 const path = require("path");
 const keys = require("./config/keys");
+const cors = require('cors');
 
 const app = express();
-
-// Trust first proxy for correct secure cookies on Render
 app.set("trust proxy", 1);
 const PORT = process.env.PORT || 5000;
 
+// CORS for Vercel frontend
+app.use(
+  cors({
+    origin: 'https://your-frontend.vercel.app', // Replace with your actual Vercel frontend URL
+    credentials: true
+  })
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(flash());
@@ -34,8 +41,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 2,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+      secure: process.env.NODE_ENV === 'production'
     },
   })
 );
