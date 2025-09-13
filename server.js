@@ -1,3 +1,11 @@
+const cors = require("cors");
+// Allow CORS for Vercel frontend
+app.use(
+  cors({
+    origin: "https://inventory-listing.vercel.app", // Replace with your actual Vercel frontend URL
+    credentials: true,
+  })
+);
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
