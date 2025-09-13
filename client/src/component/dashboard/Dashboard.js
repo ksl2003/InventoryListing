@@ -62,7 +62,7 @@ const Dashboard = () => {
           </li>
         </ul>
         <div className="copyright">
-          &copy; 2020 Inventory Management App by Yusuf Muysinkhanov.
+          &copy; 2024, Inventory Management App by Aryman Gupta
         </div>
       </div>
       <div className="main">
