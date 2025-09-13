@@ -11,11 +11,13 @@ import {
 } from "../actions/types";
 import { returnErrors } from "./errorActions";
 
+const API_URL =
+  process.env.REACT_APP_API_URL || "https://inventorylisting.onrender.com";
 export const getProducts = () => (dispatch) => {
   dispatch({ type: PRODUCTS_LOADING });
 
   axios
-    .get("/api/products", { withCredentials: true })
+    .get(`${API_URL}/api/products`, { withCredentials: true })
     .then((res) =>
       dispatch({
         type: GET_PRODUCTS,
@@ -27,7 +29,7 @@ export const getProducts = () => (dispatch) => {
 
 export const addProduct = (newProduct) => (dispatch) => {
   axios
-    .post("/api/products/add", newProduct, { withCredentials: true })
+    .post(`${API_URL}/api/products/add`, newProduct, { withCredentials: true })
     .then((res) =>
       dispatch({
         type: ADD_PRODUCT,
@@ -53,9 +55,13 @@ export const cancelEdit = () => (dispatch) => {
 export const updateProduct = (updatedProduct) => (dispatch) => {
   console.log(updateProduct);
   axios
-    .post(`/api/products/update/${updatedProduct._id}`, updatedProduct, {
-      withCredentials: true,
-    })
+    .post(
+      `${API_URL}/api/products/update/${updatedProduct._id}`,
+      updatedProduct,
+      {
+        withCredentials: true,
+      }
+    )
     .then((res) =>
       dispatch({
         type: UPDATED_PRODUCT,
@@ -67,7 +73,7 @@ export const updateProduct = (updatedProduct) => (dispatch) => {
 
 export const deleteProduct = (id) => (dispatch) => {
   axios
-    .delete(`/api/products/${id}`, { withCredentials: true })
+    .delete(`${API_URL}/api/products/${id}`, { withCredentials: true })
     .then((res) =>
       dispatch({
         type: DELETE_PRODUCTS,

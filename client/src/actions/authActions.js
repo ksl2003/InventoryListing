@@ -1,6 +1,5 @@
 import axios from "axios";
 import { returnErrors } from "./errorActions";
-
 import {
   USER_LOADING,
   USER_LOADED,
@@ -12,11 +11,14 @@ import {
   REGISTER_FAIL,
 } from "./types";
 
+const API_URL =
+  process.env.REACT_APP_API_URL || "https://inventorylisting.onrender.com";
+
 export const loadUser = () => (dispatch) => {
   dispatch({ type: USER_LOADING });
 
   axios
-    .get("/api/users/user", { withCredentials: true })
+    .get(`${API_URL}/api/users/user`, { withCredentials: true })
     .then((res) =>
       dispatch({
         type: USER_LOADED,
@@ -35,7 +37,11 @@ export const login =
   ({ email, password }) =>
   (dispatch) => {
     axios
-      .post("/api/users/login", { email, password }, { withCredentials: true })
+      .post(
+        `${API_URL}/api/users/login`,
+        { email, password },
+        { withCredentials: true }
+      )
       .then((res) => {
         dispatch({
           type: LOGIN_SUCCESS,
@@ -51,11 +57,13 @@ export const login =
   };
 
 export const logout = () => (dispatch) => {
-  axios.post("/api/users/logout", {}, { withCredentials: true }).then(() =>
-    dispatch({
-      type: LOGOUT_SUCCESS,
-    })
-  );
+  axios
+    .post(`${API_URL}/api/users/logout`, {}, { withCredentials: true })
+    .then(() =>
+      dispatch({
+        type: LOGOUT_SUCCESS,
+      })
+    );
 };
 
 export const register =
@@ -63,7 +71,7 @@ export const register =
   (dispatch) => {
     axios
       .post(
-        "/api/users/register",
+        `${API_URL}/api/users/register`,
         { username, email, password },
         { withCredentials: true }
       )
