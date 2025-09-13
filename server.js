@@ -11,6 +11,9 @@ const path = require("path");
 const keys = require("./config/keys");
 
 const app = express();
+
+// Trust first proxy for correct secure cookies on Render
+app.set("trust proxy", 1);
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
